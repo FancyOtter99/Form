@@ -3,6 +3,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from typing import List
+import uuid
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
