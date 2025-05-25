@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Submissions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    h1 {
+      color: #ff5722;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #ff5722;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Form Submissions</h1>
+  {% if submissions %}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sub in submissions %}
+      <tr>
+        <td>{{ sub.name }}</td>
+        <td>{{ sub.email }}</td>
+        <td>{{ sub.message }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>No submissions yet. It's lonely here.</p>
+  {% endif %}
+</body>
+</html>
