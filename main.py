@@ -3,7 +3,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from typing import List
+from fastapi.responses import RedirectResponse
 import uuid
+
 
 
 app = FastAPI()
