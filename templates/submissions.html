@@ -2,62 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Form Submissions</title>
+  <title>Submissions</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 2rem;
+      margin: 2em;
+      background-color: #f5f5f5;
+      color: #333;
     }
     h1 {
-      color: #ff5722;
-      text-align: center;
-      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      margin-bottom: 1em;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    th, td {
-      padding: 1rem;
+    .submission {
       border: 1px solid #ddd;
-      text-align: left;
+      background: #fff;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s;
     }
-    th {
-      background: #ff5722;
-      color: white;
-      font-weight: bold;
+    .submission:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-    tr:nth-child(even) {
-      background: #f9f9f9;
+    .submission h3 {
+      margin-top: 0;
+      margin-bottom: 0.5em;
+    }
+    .submission p {
+      margin: 0.5em 0;
+    }
+    .submission form {
+      display: inline;
+    }
+    button {
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>All Form Submissions</h1>
-  {% if submissions %}
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Message</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for sub in submissions %}
-      <tr>
-        <td>{{ sub.name }}</td>
-        <td>{{ sub.email }}</td>
-        <td>{{ sub.message }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <h1>Form Submissions</h1>
+  
+  {% if submissions|length == 0 %}
+    <p>No submissions yet. The laser’s still sleeping. 🔥</p>
   {% else %}
-    <p>No submissions yet. It's lonely here.</p>
+    {% for s in submissions %}
+      <div class="submission">
+        <h3>{{ s.name }} <small>({{ s.email }})</small></h3>
+        <p>{{ s.message }}</p>
+        <form action="/delete_submission" method="post">
+          <input type="hidden" name="submission_id" value="{{ s.id }}" />
+          <input type="hidden" name="key" value="{{ key }}" />
+          <button type="submit">Responded ✔️</button>
+        </form>
+      </div>
+    {% endfor %}
   {% endif %}
+  
+  <div class="footer">
+    &copy; 2025 Precision Laser Engraving — Crafted with precision, managed with caffeine.
+  </div>
 </body>
 </html>
