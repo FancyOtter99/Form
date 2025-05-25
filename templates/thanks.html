@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You!</title>
+  <style>
+    body {
+      background: #f7fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 2.5em 3em;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    h1 {
+      color: #27ae60;
+      margin-bottom: 0.5em;
+      font-size: 2.5em;
+    }
+    p {
+      font-size: 1.1em;
+      margin-bottom: 1.5em;
+      line-height: 1.4;
+    }
+    a.button {
+      display: inline-block;
+      background: #2980b9;
+      color: white;
+      padding: 0.75em 2em;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 5px 10px rgba(41,128,185,0.3);
+      transition: background 0.3s ease;
+    }
+    a.button:hover {
+      background: #1c5980;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Thanks for Reaching Out! 🎉</h1>
+    <p>We received your message loud and clear. Our lasers are revving up to craft something amazing for you. Expect a reply soon!</p>
+    <a href="/" class="button" aria-label="Go back to homepage">Back to Home</a>
+  </div>
+</body>
+</html>
