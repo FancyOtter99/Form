@@ -1,102 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Submissions</title>
-<style>
-  body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    background: #f0f2f5;
-    color: #333;
-  }
-  .container {
-    max-width: 800px;
-    margin: 2em auto;
-    padding: 2em;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-  h1 {
-    color: #222;
-    font-size: 2em;
-    margin-bottom: 1em;
-    border-bottom: 2px solid #4CAF50;
-    padding-bottom: 0.3em;
-  }
-  .submission {
-    border-bottom: 1px solid #eee;
-    padding: 1em 0;
-    transition: background 0.2s;
-  }
-  .submission:hover {
-    background: #f9f9f9;
-  }
-  .submission h3 {
-    margin: 0;
-    font-size: 1.2em;
-  }
-  .submission small {
-    color: #777;
-    font-size: 0.9em;
-  }
-  .submission p {
-    margin: 0.5em 0;
-    line-height: 1.4;
-  }
-  .submission form {
-    margin-top: 0.5em;
-  }
-  button {
-    background: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 0.4em 1em;
-    border-radius: 4px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  button:hover {
-    background: #45a049;
-  }
-  .no-submissions {
-    color: #888;
-    font-style: italic;
-  }
-  .footer {
-    text-align: center;
-    margin-top: 2em;
-    font-size: 0.85em;
-    color: #aaa;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>Form Submissions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    h1 {
+      color: #ff5722;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #ff5722;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .responded-form {
+      display: inline-block;
+      margin: 0;
+    }
+    .responded-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 0.3em 0.7em;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 0.9em;
+    }
+    .responded-btn:hover {
+      background: #45a049;
+    }
+    .no-submissions {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Form Submissions</h1>
-    
-    {% if submissions|length == 0 %}
-      <p class="no-submissions">No submissions yet. The laser’s still snoozing. 🔥</p>
-    {% else %}
-      {% for s in submissions %}
-        <div class="submission">
-          <h3>{{ s.name }} <small>({{ s.email }})</small></h3>
-          <p>{{ s.message }}</p>
-          <form action="/delete_submission" method="post">
-            <input type="hidden" name="submission_id" value="{{ s.id }}" />
+  <h1>All Form Submissions</h1>
+  {% if submissions %}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sub in submissions %}
+      <tr>
+        <td>{{ sub.name }}</td>
+        <td>{{ sub.email }}</td>
+        <td>{{ sub.message }}</td>
+        <td>
+          <form class="responded-form" action="/delete_submission" method="post">
+            <input type="hidden" name="submission_id" value="{{ sub.id }}" />
             <input type="hidden" name="key" value="{{ key }}" />
-            <button type="submit">Responded ✔️</button>
+            <button class="responded-btn" type="submit">Responded ✔️</button>
           </form>
-        </div>
+        </td>
+      </tr>
       {% endfor %}
-    {% endif %}
-    
-    <div class="footer">
-      &copy; 2025 Precision Laser Engraving — Managed by caffeine and low-key sarcasm.
-    </div>
-  </div>
+    </tbody>
+  </table>
+  {% else %}
+    <p class="no-submissions">No submissions yet. The laser’s still snoozing. 🔥</p>
+  {% endif %}
 </body>
 </html>
-
