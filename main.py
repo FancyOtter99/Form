@@ -24,11 +24,18 @@ submissions = []
 
 SECRET_KEY = "letmein"  # change this!
 
-@app.post("/submit", response_class=HTMLResponse)
+@app.get("/thanks", response_class=HTMLResponse)
+async def thanks(request: Request):
+    return templates.TemplateResponse("thanks.html", {"request": request})
+
+
+
+@app.post("/submit")
 async def submit_form(request: Request, name: str = Form(...), email: str = Form(...), message: str = Form(...)):
     submission_id = str(uuid.uuid4())
     submissions.append({"id": submission_id, "name": name, "email": email, "message": message})
-    return templates.TemplateResponse("thanks.html", {"request": request, "name": name})
+    return RedirectResponse(url=f"/thanks?name={name}", status_code=303)
+
 
 
 
