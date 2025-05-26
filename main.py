@@ -5,6 +5,15 @@ from fastapi.staticfiles import StaticFiles
 from typing import List
 from fastapi.responses import RedirectResponse
 import uuid
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://yr06dt0v.live.codepad.app"],  # or ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["POST", "GET", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 
 
