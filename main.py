@@ -120,9 +120,6 @@ async def show_submissions(request: Request):
 
     username = active_sessions[session_token]
 
-    # If you want to restrict this only to certain admin users, add this check:
-    if username != "admin":
-        return HTMLResponse(content="Access Denied. You’re not powerful enough to see these secrets.", status_code=403)
 
     # Render the submissions page for the admin
     return templates.TemplateResponse("submissions.html", {"request": request, "submissions": submissions})
