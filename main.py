@@ -60,7 +60,7 @@ async def login(request: Request):
             key=SESSION_COOKIE_NAME,
             value=session_token,
             httponly=True,
-            secure=False,
+            secure=True,
             samesite="Lax"
         )
         return response
