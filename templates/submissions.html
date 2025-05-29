@@ -19,14 +19,14 @@
     border-collapse: collapse;
     background: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    table-layout: fixed; /* Let’s fix those widths! */
+    table-layout: fixed;
   }
   th, td {
     padding: 1rem;
     border: 1px solid #ddd;
     text-align: left;
-    word-wrap: break-word; /* Yes! No horizontal scrollbars here! */
-    vertical-align: top; /* Start at the top of the cell */
+    word-wrap: break-word;
+    vertical-align: top;
   }
   th {
     background: #ff5722;
@@ -58,12 +58,32 @@
     color: #888;
     font-style: italic;
   }
+  .back-btn {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.6rem 1.2rem;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    width: fit-content;
+  }
+  .back-btn:hover {
+    background: #1976D2;
+  }
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.9em;
+    color: #aaa;
+  }
 </style>
 </head>
 <body>
-  <footer>
-  © 2025 Precision Laser Engraving — Crafted with care.
-</footer>
   <h1>All Form Submissions</h1>
   {% if submissions %}
   <table>
@@ -84,7 +104,6 @@
         <td>
           <form class="responded-form" action="/delete_submission" method="post">
             <input type="hidden" name="submission_id" value="{{ sub.id }}" />
-            <input type="hidden" name="key" value="{{ key }}" />
             <button class="responded-btn" type="submit">Responded ✔️</button>
           </form>
         </td>
@@ -95,6 +114,11 @@
   {% else %}
     <p class="no-submissions">No submissions yet. The laser’s still snoozing. 🔥</p>
   {% endif %}
+
+  <a href="/admin" class="back-btn">⬅️ Back to Admin Home</a>
+
+  <footer>
+    © 2025 Precision Laser Engraving — Crafted with care.
+  </footer>
 </body>
 </html>
-
