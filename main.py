@@ -40,6 +40,13 @@ async def thanks(request: Request):
     return templates.TemplateResponse("thanks.html", {"request": request})
 
 
+@app.get("/whoami")
+async def whoami(request: Request):
+    token = request.cookies.get(SESSION_COOKIE_NAME)
+    return {"session_token": token, "username": active_sessions.get(token)}
+
+
+
 @app.post("/login")
 async def login(request: Request):
     form = await request.form()
