@@ -23,8 +23,9 @@ templates = Jinja2Templates(directory="templates")
 
 # Simple in-memory storage for demo. Use a database for production!
 submissions = []
-
+active_sessions = {}
 SECRET_KEY = "letmein"  # change this!
+SESSION_COOKIE_NAME = "session_token"
 
 
 # Example allowed users - replace with your actual list or DB lookup
