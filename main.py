@@ -82,6 +82,7 @@ async def admin_page(request: Request):
     return templates.TemplateResponse("admin.html", {"request": request, "username": username})
 
 
+@app.post("/logout")
 @app.get("/logout")
 async def logout(request: Request):
     session_token = request.cookies.get(SESSION_COOKIE_NAME)
