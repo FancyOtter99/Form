@@ -13,7 +13,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://yr06dt0v.live.codepad.app/"],  # or ["*"] for testing
+    allow_origins=["https://yr06dt0v.live.codepad.app"],  # or ["*"] for testing
     allow_credentials=True,
     allow_methods=["POST", "GET", "OPTIONS"],
     allow_headers=["*"],
