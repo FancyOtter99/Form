@@ -24,7 +24,6 @@ templates = Jinja2Templates(directory="templates")
 # Simple in-memory storage for demo. Use a database for production!
 submissions = []
 active_sessions = {}
-SECRET_KEY = "letmein"  # change this!
 SESSION_COOKIE_NAME = "session_token"
 
 
@@ -126,9 +125,9 @@ async def show_submissions(request: Request):
 
 
 @app.post("/delete_submission")
-async def delete_submission(submission_id: str = Form(...), key: str = Form(...)):
+async def delete_submission(submission_id: str = Form(...)):
     global submissions
     submissions = [s for s in submissions if s["id"] != submission_id]
-    return RedirectResponse(url=f"/submissions?key={key}", status_code=303)
+    return RedirectResponse(url="/submissions", status_code=303)
 
 
