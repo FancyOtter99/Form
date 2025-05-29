@@ -109,10 +109,23 @@ async def submit_form(request: Request, name: str = Form(...), email: str = Form
 
 
 @app.get("/submissions", response_class=HTMLResponse)
-async def show_submissions(request: Request, key: str):
-    if key != "letmein":
-        return HTMLResponse(content="Unauthorized", status_code=401)
-    return templates.TemplateResponse("submissions.html", {"request": request, "submissions": submissions, "key": key})
+async def show_submissions(request: Request):
+    # Check for session token in cookies
+    session_token = request.cookies.get(SESSION_COOKIE_NAME)
+    print("Session token:", session_token)
+
+    # If no session or invalid session, redirect to /
+    if not session_token or session_token not in active_sessions:
+        return RedirectResponse(url="/", status_code=302)
+
+    username = active_sessions[session_token]
+
+    # If you want to restrict this only to certain admin users, add this check:
+    if username != "admin":
+        return HTMLResponse(content="Access Denied. You’re not powerful enough to see these secrets.", status_code=403)
+
+    # Render the submissions page for the admin
+    return templates.TemplateResponse("submissions.html", {"request": request, "submissions": submissions})
 
 
 @app.post("/delete_submission")
