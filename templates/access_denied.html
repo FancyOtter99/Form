@@ -44,5 +44,17 @@
     <p>You're not powerful enough to enter here.<br>
        Come back when you’ve leveled up your life skills and collected more XP!</p>
     <footer>Pro tip: Try yelling "Open Sesame" loudly. No guarantees.</footer>
+
+    <div id="easter-egg" style="display:none; margin-top:2rem; font-size:1.2rem; color:#ffeb3b; text-shadow: 1px 1px 2px #000;">
+    🐰🎉 Congrats, you found the secret Easter egg! You’re officially awesome.
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('easter') === '1') {
+        document.getElementById('easter-egg').style.display = 'block';
+    }
+</script>
+
 </body>
 </html>
