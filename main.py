@@ -41,22 +41,33 @@ async def thanks(request: Request):
 
 
 @app.post("/login")
-async def login(username: str = Form(...), password: str = Form(...)):
-    if username in ALLOWED_USERS and ALLOWED_USERS[username] == password:
-        # Generate a session token
+async def login(request: Request):
+    form = await request.form()
+    username = form.get("username")
+    password = form.get("password")
+
+    print("Received:", username, password)
+    print("Known users:", users)
+
+    if username in users and users[username] == password:
         session_token = str(uuid.uuid4())
         active_sessions[session_token] = username
 
-        # Create the response and set the cookie
-        response = JSONResponse(content={"success": True, "message": f"Welcome {username}!"})
-        response.set_cookie(key=SESSION_COOKIE_NAME, value=session_token, httponly=True)
+        print("Generated session_token:", session_token)
 
+        response = JSONResponse(content={"success": True})
+        response.set_cookie(
+            key=SESSION_COOKIE_NAME,
+            value=session_token,
+            httponly=True,
+            secure=False,
+            samesite="Lax"
+        )
         return response
     else:
-        return JSONResponse(
-            content={"success": False, "message": "Invalid username or password."},
-            status_code=status.HTTP_401_UNAUTHORIZED
-        )
+        print("Invalid login attempt")
+        return JSONResponse(content={"success": False, "message": "Invalid credentials."}, status_code=401)
+
 
 
 @app.get("/admin", response_class=HTMLResponse)
