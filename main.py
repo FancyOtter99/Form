@@ -39,7 +39,9 @@ ALLOWED_USERS = {
 async def thanks(request: Request):
     return templates.TemplateResponse("thanks.html", {"request": request})
 
-
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("access_denied.html", {"request": request})
 
 @app.post("/login")
 async def login(request: Request):
