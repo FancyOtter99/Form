@@ -42,19 +42,22 @@ async def thanks(request: Request):
 
 @app.post("/login")
 async def login(username: str = Form(...), password: str = Form(...)):
-    # Check if username exists and password matches
     if username in ALLOWED_USERS and ALLOWED_USERS[username] == password:
-        return JSONResponse(content={"success": True, "message": f"Welcome {username}!"})
+        # Generate a session token
         session_token = str(uuid.uuid4())
         active_sessions[session_token] = username
-        response.set_cookie(
-            key=SESSION_COOKIE_NAME,
-            value=session_token,
-            httponly=True,
-            secure=True,
-            samesite="Lax",
-            max_age=3600
+
+        # Create the response and set the cookie
+        response = JSONResponse(content={"success": True, "message": f"Welcome {username}!"})
+        response.set_cookie(key=SESSION_COOKIE_NAME, value=session_token, httponly=True)
+
+        return response
+    else:
+        return JSONResponse(
+            content={"success": False, "message": "Invalid username or password."},
+            status_code=status.HTTP_401_UNAUTHORIZED
         )
+
 
     else:
         return JSONResponse(
@@ -66,15 +69,12 @@ async def login(username: str = Form(...), password: str = Form(...)):
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_page(request: Request):
     session_token = request.cookies.get(SESSION_COOKIE_NAME)
-    username = active_sessions.get(session_token)
-
-    if username:
-        return templates.TemplateResponse(
-            "admin.html",  # Your admin page template
-            {"request": request, "username": username}
-        )
-    else:
+    if not session_token or session_token not in active_sessions:
         return RedirectResponse(url="/", status_code=302)
+
+    username = active_sessions[session_token]
+    return templates.TemplateResponse("admin.html", {"request": request, "username": username})
+
 
 
 
