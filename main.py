@@ -47,9 +47,9 @@ async def login(request: Request):
     password = form.get("password")
 
     print("Received:", username, password)
-    print("Known users:", users)
+    print("Known users:", ALLOWED_USERS)  # <---- fix here
 
-    if username in users and users[username] == password:
+    if username in ALLOWED_USERS and ALLOWED_USERS[username] == password:
         session_token = str(uuid.uuid4())
         active_sessions[session_token] = username
 
