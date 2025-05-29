@@ -62,6 +62,7 @@ async def login(username: str = Form(...), password: str = Form(...)):
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_page(request: Request):
     session_token = request.cookies.get(SESSION_COOKIE_NAME)
+    print("Session token:", session_token)
     if not session_token or session_token not in active_sessions:
         return RedirectResponse(url="/", status_code=302)
 
