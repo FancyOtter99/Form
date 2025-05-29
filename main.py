@@ -6,6 +6,8 @@ from typing import List
 from fastapi.responses import RedirectResponse
 import uuid
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import status
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -24,10 +26,29 @@ submissions = []
 
 SECRET_KEY = "letmein"  # change this!
 
+
+# Example allowed users - replace with your actual list or DB lookup
+ALLOWED_USERS = {
+    "admin": "letmein",
+    "fancyotter": "otter123",
+    "guest": "guestpass"
+}
+
 @app.get("/thanks", response_class=HTMLResponse)
 async def thanks(request: Request):
     return templates.TemplateResponse("thanks.html", {"request": request})
 
+
+@app.post("/login")
+async def login(username: str = Form(...), password: str = Form(...)):
+    # Check if username exists and password matches
+    if username in ALLOWED_USERS and ALLOWED_USERS[username] == password:
+        return JSONResponse(content={"success": True, "message": f"Welcome {username}!"})
+    else:
+        return JSONResponse(
+            content={"success": False, "message": "Invalid username or password."},
+            status_code=status.HTTP_401_UNAUTHORIZED
+        )
 
 
 @app.post("/submit")
