@@ -59,13 +59,6 @@ async def login(username: str = Form(...), password: str = Form(...)):
         )
 
 
-    else:
-        return JSONResponse(
-            content={"success": False, "message": "Invalid username or password."},
-            status_code=status.HTTP_401_UNAUTHORIZED
-        )
-
-
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_page(request: Request):
     session_token = request.cookies.get(SESSION_COOKIE_NAME)
