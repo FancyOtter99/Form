@@ -1,10 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><title>Admin</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #9013fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .card {
+      background: rgba(0,0,0,0.45);
+      padding: 2.5rem 3rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.7);
+      max-width: 450px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 3rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.85);
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      color: #ddd;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn {
+      background-color: #ff4081;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(255, 64, 129, 0.5);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      min-width: 160px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      white-space: nowrap; /* prevent wrapping! */
+      height: 50px; /* fixed height for all buttons */
+      padding: 0 16px;
+    }
+
+    .btn:hover {
+      background-color: #e91e63;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(233, 30, 99, 0.7);
+    }
+
+    form {
+      margin: 0;
+      flex: 1;
+    }
+
+    form button.btn {
+      width: 100%;
+    }
+
+    a.btn {
+      flex: 1;
+    }
+
+    .btn-wrapper {
+      flex: 1;
+      display: flex;
+    }
+  </style>
+</head>
 <body>
-  <h1>Welcome, {{ username }}!</h1>
-  <form action="/logout" method="post">
-    <button type="submit">Logout</button>
-  </form>
+  <div class="card">
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Ah, the mighty admin! The gatekeeper of secrets and all things submission-related. Proceed wisely, noble one.</p>
+
+    <div class="btn-container">
+      <div class="btn-wrapper">
+        <a href="/submissions" class="btn" role="button" aria-label="Go to submissions">View Submissions</a>
+      </div>
+      <div class="btn-wrapper">
+        <form action="/logout" method="post">
+          <button type="submit" class="btn" aria-label="Logout">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+
