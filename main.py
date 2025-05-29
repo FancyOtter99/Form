@@ -40,12 +40,6 @@ async def thanks(request: Request):
     return templates.TemplateResponse("thanks.html", {"request": request})
 
 
-@app.get("/whoami")
-async def whoami(request: Request):
-    token = request.cookies.get(SESSION_COOKIE_NAME)
-    return {"session_token": token, "username": active_sessions.get(token)}
-
-
 
 @app.post("/login")
 async def login(request: Request):
@@ -86,6 +80,18 @@ async def admin_page(request: Request):
 
     username = active_sessions[session_token]
     return templates.TemplateResponse("admin.html", {"request": request, "username": username})
+
+
+@app.get("/logout")
+async def logout(request: Request):
+    session_token = request.cookies.get(SESSION_COOKIE_NAME)
+    if session_token and session_token in active_sessions:
+        del active_sessions[session_token]
+
+    response = RedirectResponse(url="/", status_code=302)
+    response.delete_cookie(key=SESSION_COOKIE_NAME)
+    return response
+
 
 
 
