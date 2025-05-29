@@ -61,7 +61,7 @@ async def login(request: Request):
             value=session_token,
             httponly=True,
             secure=True,
-            samesite="Lax"
+            samesite="None"
         )
         return response
     else:
