@@ -29,9 +29,7 @@ SESSION_COOKIE_NAME = "session_token"
 
 # Example allowed users - replace with your actual list or DB lookup
 ALLOWED_USERS = {
-    "admin": "letmein",
-    "fancyotter": "otter123",
-    "guest": "guestpass"
+    "kasyn": "hello",
 }
 
 @app.get("/thanks", response_class=HTMLResponse)
